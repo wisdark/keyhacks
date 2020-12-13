@@ -12,10 +12,13 @@ KeyHacks shows ways in which particular API keys found on a Bug Bounty Program c
 - [Algolia API key](#Algolia-API-key)
 - [Asana Access token](#Asana-Access-Token)
 - [AWS Access Key ID and Secret](#AWS-Access-Key-ID-and-Secret)
+- [Azure Application Insights APP ID and API Key](#Azure-Application-Insights-APP-ID-and-API-Key)
+- [Bing Maps API Key](#Bing-Maps-API-Key)
 - [Bit.ly Access token](#Bitly-Access-token)
 - [Branch.io Key and Secret](#BranchIO-Key-and-Secret)
 - [BrowserStack Access Key](#BrowserStack-Access-Key)
 - [Buildkite Access token](#Buildkite-Access-token)
+- [Calendly API Key](#Calendly-API-Key)
 - [CircleCI Access Token](#CircleCI-Access-Token)
 - [DataDog API key](#DataDog-API-key)
 - [Deviant Art Access Token](#Deviant-Art-Access-Token)
@@ -39,12 +42,15 @@ KeyHacks shows ways in which particular API keys found on a Bug Bounty Program c
 - [Instagram Graph API](#Instagram-Graph-Api-Access-Token)
 - [Ipstack API Key](#Ipstack-API-Key)
 - [JumpCloud API key](#JumpCloud-API-Key)
+- [Keen.io API key](#Keenio-API-Key)
 - [Loqate API Key](#Loqate-API-key)
 - [MailChimp API Key](#MailChimp-API-Key)
 - [MailGun Private Key](#MailGun-Private-Key)
 - [Mapbox API key](#Mapbox-API-Key)
 - [Microsoft Azure Tenant](#Microsoft-Azure-Tenant)
 - [Microsoft Shared Access Signatures (SAS)](#Microsoft-Shared-Access-Signatures-(SAS))
+- [New Relic Personal API Key (NerdGraph)](#New-Relic-Personal-API-Key-(NerdGraph))
+- [New Relic REST API](#New-Relic-REST-API)
 - [NPM token](#NPM-token)
 - [Pagerduty API token](#Pagerduty-API-token)
 - [Paypal client id and secret key](#Paypal-client-id-and-secret-key)
@@ -64,11 +70,13 @@ KeyHacks shows ways in which particular API keys found on a Bug Bounty Program c
 - [Twitter Bearer token](#Twitter-Bearer-token)
 - [WakaTime API Key](#WakaTime-API-Key)
 - [WPEngine API Key](#WPEngine-API-Key)
+- [YouTube API Key](#YouTube-API-Key)
 - [Zapier Webhook Token](#Zapier-Webhook-Token)
 - [Zendesk Access token](#Zendesk-Access-Token)
 
 
 # Detailed Information
+
 ## [Slack Webhook](https://api.slack.com/incoming-webhooks)
 
 If the below command returns `missing_text_or_fallback_or_attachments`, it means that the URL is valid, any other responses would mean that the URL is invalid.
@@ -316,6 +324,24 @@ static void UseAccountSAS(string sasToken)
 }
 ```
 
+## [New Relic Personal API Key (NerdGraph)](https://docs.newrelic.com/docs/apis/nerdgraph/get-started/introduction-new-relic-nerdgraph#endpoint)
+
+```
+curl -X POST https://api.newrelic.com/graphql \
+-H 'Content-Type: application/json' \
+-H 'API-Key: YOUR_API_KEY' \
+-d '{ "query":  "{ requestContext { userId apiKey } }" } '
+```
+
+## [New Relic REST API](https://docs.newrelic.com/docs/apis/rest-api-v2/application-examples-v2/list-your-app-id-metric-timeslice-data-v2)
+
+```
+curl -X GET 'https://api.newrelic.com/v2/applications.json' \
+     -H "X-Api-Key:${APIKEY}" -i
+```
+
+If valid, test further to see if it's an [admin key](https://docs.newrelic.com/docs/apis/get-started/intro-apis/types-new-relic-api-keys#admin)
+
 ## [Heroku API key](https://devcenter.heroku.com/articles/platform-api-quickstart)
 ```
 curl -X POST https://api.heroku.com/apps -H "Accept: application/vnd.heroku+json; version=3" -H "Authorization: Bearer API_KEY_HERE"
@@ -439,6 +465,14 @@ Visit the following URL to check for validity:
 
 ```
 https://api2.branch.io/v1/app/KEY_HERE?branch_secret=SECRET_HERE
+```
+
+## [Bing Maps API Key](https://docs.microsoft.com/en-us/bingmaps/rest-services/locations/find-a-location-by-address)
+
+Visit this link to check for the key's validity. A valid key's response should start with `authenticationResultCode:	"ValidCredentials"`
+
+```
+https://dev.virtualearth.net/REST/v1/Locations?CountryRegion=US&adminDistrict=WA&locality=Somewhere&postalCode=98001&addressLine=100%20Main%20St.&key=API_KEY
 ```
 
 ## [Bit.ly Access token](https://dev.bitly.com/authentication.html)
@@ -596,6 +630,44 @@ You'll get username in response in case of success, `401 Unauthorized` in case i
 NPM token can be [CIDR-whitelisted](https://docs.npmjs.com/creating-and-viewing-authentication-tokens#creating-tokens-with-the-cli). Thus if you are using token from *non-whitelisted* CIDR you'll get `403 Forbidden` in response. So try to verify NPM token from different IP ranges!.
 
 P.S. Some companies [uses registries other than `registry.npmjs.org`](https://medium.com/bugbountywriteup/one-token-to-leak-them-all-the-story-of-a-8000-npm-token-79b13af182a3). If it's the case replace all `registry.npmjs.org` occurrences with domain name of company's NPM registry.
+
+## [Keen.io API Key](https://keen.io/docs/api/)
+
+Get all collections for a specific project:
+
+```
+curl "https://api.keen.io/3.0/projects/PROJECT_ID/events?api_key=READ_KEY"
+```
+
+
+## [Calendly API Key](https://developer.calendly.com/docs/)
+
+Get user information:
+
+````
+curl --header "X-TOKEN: <your_token>" https://calendly.com/api/v1/users/me
+````
+
+List Webhook Subscriptions:
+
+````
+curl --header "X-TOKEN: <your_token>" https://calendly.com/api/v1/hooks
+````
+
+## [Azure Application Insights APP ID and API Key](https://dev.applicationinsights.io/reference)
+
+Get the total number of requests made in last 24 hours:
+
+```
+curl -H "x-api-key: {API_Key}" "https://api.applicationinsights.io/v1/apps/{APP_ID}/metrics/requests/count"
+```
+
+## [YouTube API Key](https://developers.google.com/youtube/v3/docs/)
+Fetch content details for a YouTube channel (The channelId in this case points to PewDiePie's channel).
+
+```
+curl -iLk 'https://www.googleapis.com/youtube/v3/activities?part=contentDetails&maxResults=25&channelId=UC-lHJZR3Gqxm24_Vd_AJ5Yw&key={KEY_HERE}'
+```
 
 # Contributing
 
