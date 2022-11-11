@@ -15,6 +15,7 @@ KeyHacks shows ways in which particular API keys found on a Bug Bounty Program c
 - [Asana Access token](#Asana-Access-Token)
 - [AWS Access Key ID and Secret](#AWS-Access-Key-ID-and-Secret)
 - [Azure Application Insights APP ID and API Key](#Azure-Application-Insights-APP-ID-and-API-Key)
+- [Bazaarvoice Passkey](#Bazaarvoice-Passkey)
 - [Bing Maps API Key](#Bing-Maps-API-Key)
 - [Bit.ly Access token](#Bitly-Access-token)
 - [Branch.io Key and Secret](#BranchIO-Key-and-Secret)
@@ -25,6 +26,7 @@ KeyHacks shows ways in which particular API keys found on a Bug Bounty Program c
 - [CircleCI Access Token](#CircleCI-Access-Token)
 - [Cypress record key](#Cypress-record-key)
 - [DataDog API key](#DataDog-API-key)
+- [Delighted API key](#Delighted-api-key)
 - [Deviant Art Access Token](#Deviant-Art-Access-Token)
 - [Deviant Art Secret](#Deviant-Art-Secret)
 - [Dropbox API](#Dropbox-API)
@@ -37,11 +39,14 @@ KeyHacks shows ways in which particular API keys found on a Bug Bounty Program c
 - [GitHub private SSH key](#GitHub-private-SSH-key)
 - [Github Token](#Github-Token)
 - [Gitlab personal access token](#Gitlab-personal-access-token)
+- [GitLab runner registration token](#Gitlab-runner-registration-token)
 - [Google Cloud Service Account credentials](#Google-Cloud-Service-Account-credentials)
 - [Google Maps API key](#Google-Maps-API-key)
 - [Google Recaptcha key](#Google-Recaptcha-key)
+- [Help Scout OAUTH](#Help-Scout-OAUTH)
 - [Heroku API key](#Heroku-API-key)
 - [HubSpot API key](#Hubspot-API-key)
+- [Infura API key](#Infura-API-key)
 - [Instagram Access Token](#Instagram-Access-Token)
 - [Instagram Basic Display API](#Instagram-Basic-Display-API-Access-Token)
 - [Instagram Graph API](#Instagram-Graph-Api-Access-Token)
@@ -49,6 +54,7 @@ KeyHacks shows ways in which particular API keys found on a Bug Bounty Program c
 - [Iterable API Key](#Iterable-API-Key)
 - [JumpCloud API Key](#JumpCloud-API-Key)
 - [Keen.io API Key](#Keenio-API-Key)
+- [LinkedIn OAUTH](#LinkedIn-OAUTH)
 - [Lokalise API Key](#Lokalise-API-Key)
 - [Loqate API Key](#Loqate-API-key)
 - [MailChimp API Key](#MailChimp-API-Key)
@@ -59,6 +65,7 @@ KeyHacks shows ways in which particular API keys found on a Bug Bounty Program c
 - [New Relic Personal API Key (NerdGraph)](#New-Relic-Personal-API-Key-(NerdGraph))
 - [New Relic REST API](#New-Relic-REST-API)
 - [NPM token](#NPM-token)
+- [OpsGenie API Key](#OpsGenie-API-Key)
 - [Pagerduty API token](#Pagerduty-API-token)
 - [Paypal client id and secret key](#Paypal-client-id-and-secret-key)
 - [Pendo Integration Key](#Pendo-Integration-Key)
@@ -67,6 +74,7 @@ KeyHacks shows ways in which particular API keys found on a Bug Bounty Program c
 - [Salesforce API key](#Salesforce-API-key)
 - [SauceLabs Username and access Key](#SauceLabs-Username-and-access-Key)
 - [SendGrid API Token](#SendGrid-API-Token)
+- [Shodan.io](#Shodan-Api-Key)
 - [Slack API token](#Slack-API-token)
 - [Slack Webhook](#Slack-Webhook)
 - [Sonarcloud](#Sonarcloud-Token)
@@ -84,6 +92,7 @@ KeyHacks shows ways in which particular API keys found on a Bug Bounty Program c
 - [YouTube API Key](#YouTube-API-Key)
 - [Zapier Webhook Token](#Zapier-Webhook-Token)
 - [Zendesk Access token](#Zendesk-Access-Token)
+- [Zendesk API key](#Zendesk-api-key)
 
 
 # Detailed Information
@@ -179,6 +188,11 @@ Get all contact details:
 ```
 https://api.hubapi.com/contacts/v1/lists/all/contacts/all?hapikey={keyhere}
 
+```
+
+## [Infura API key](https://docs.infura.io/infura/networks/ethereum/how-to/secure-a-project/project-id)
+```
+curl https://mainnet.infura.io/v3/<YOUR-API-KEY> -X POST -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"eth_accounts","params":[],"id":1}'
 ```
 
 ## [Deviant Art Secret](https://www.deviantart.com/developers/authentication)
@@ -382,6 +396,12 @@ Mapbox secret keys start with `sk`, rest start with `pk` (public token), `sk` (s
 
 ```
 curl "https://api.mapbox.com/geocoding/v5/mapbox.places/Los%20Angeles.json?access_token=ACCESS_TOKEN"
+
+#Check token validity
+curl "https://api.mapbox.com/tokens/v2?access_token=YOUR_MAPBOX_ACCESS_TOKEN"
+
+#Get list of all tokens associated with an account. (only works if the token is a Secret Token (sk), and has the appropiate scope)
+curl "https://api.mapbox.com/tokens/v2/MAPBOX_USERNAME_HERE?access_token=YOUR_MAPBOX_ACCESS_TOKEN"
 ```
 
 ## [Salesforce API key](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/quickstart_oauth.htm)
@@ -535,6 +555,12 @@ curl https://{subdomain}.zendesk.com/api/v2/tickets.json \
   -H "Authorization: Bearer ACCESS_TOKEN"
 ```
 
+## [Zendesk Api Key](https://developer.zendesk.com/api-reference/ticketing/introduction/)
+API tokens are different from OAuth tokens, API tokens are auto-generated passwords in the Support admin interface.
+```
+curl https://{target}.zendesk.com/api/v2/users.json \  -u support@{target}.com/token:{here your token}
+```
+
 ## [MailChimp API Key](https://developer.mailchimp.com/documentation/mailchimp/reference/overview/)
 ```
 curl --request GET --url 'https://<dc>.api.mailchimp.com/3.0/' --user 'anystring:<API_KEY>' --include
@@ -551,6 +577,14 @@ curl "https://api.wpengine.com/1.2/?method=site&account_name=ACCOUNT_NAME&wpe_ap
 ## [DataDog API key](https://docs.datadoghq.com/api/)
 ```
 curl "https://api.datadoghq.com/api/v1/dashboard?api_key=<api_key>&application_key=<application_key>"
+```
+
+## [Delighted API key](https://app.delighted.com/docs/api)
+Do not delete the `:` at the end.
+```
+curl https://api.delighted.com/v1/metrics.json \
+  -H "Content-Type: application/json" \
+  -u YOUR_DELIGHTED_API_KEY:
 ```
 
 ## [Travis CI API token](https://developer.travis-ci.com/gettingstarted)
@@ -589,6 +623,22 @@ curl -i -X GET 'https://graph.facebook.com/v8.0/me/accounts?access_token={access
 ## [Gitlab personal access token](https://docs.gitlab.com/ee/api/README.html#personal-access-tokens)
 ```
 curl "https://gitlab.example.com/api/v4/projects?private_token=<your_access_token>"
+```
+
+## [GitLab runner registration token](https://docs.gitlab.com/runner/register/)
+```
+docker run --rm gitlab/gitlab-runner register \
+  --non-interactive \
+  --executor "docker" \
+  --docker-image alpine:latest \
+  --url "https://gitlab.com/" \
+  --registration-token "PROJECT_REGISTRATION_TOKEN" \
+  --description "keyhacks-test" \
+  --maintenance-note "Testing token with keyhacks" \
+  --tag-list "docker,aws" \
+  --run-untagged="true" \
+  --locked="false" \
+  --access-level="not_protected"
 ```
 
 ## [Paypal client id and secret key](https://developer.paypal.com/docs/api/get-an-access-token-curl/)
@@ -670,6 +720,11 @@ You'll get username in response in case of success, `401 Unauthorized` in case i
 NPM token can be [CIDR-whitelisted](https://docs.npmjs.com/creating-and-viewing-authentication-tokens#creating-tokens-with-the-cli). Thus if you are using token from *non-whitelisted* CIDR you'll get `403 Forbidden` in response. So try to verify NPM token from different IP ranges!.
 
 P.S. Some companies [uses registries other than `registry.npmjs.org`](https://medium.com/bugbountywriteup/one-token-to-leak-them-all-the-story-of-a-8000-npm-token-79b13af182a3). If it's the case replace all `registry.npmjs.org` occurrences with domain name of company's NPM registry.
+
+## [OpsGenie API Key](https://docs.opsgenie.com/docs/api-overview)
+```
+curl https://api.opsgenie.com/v2/alerts -H 'Authorization: GenieKey API_KEY'
+```
 
 ## [Keen.io API Key](https://keen.io/docs/api/)
 
@@ -797,6 +852,36 @@ curl -X POST \
    curl -s -X GET --user 'USER:PASSWORD' "https://www.pivotaltracker.com/services/v5/me -o pivotaltracker.json"
    jq --raw-output .api_token pivotaltracker.json
    ```
+## [LinkedIn OAUTH](https://docs.microsoft.com/en-us/linkedin/shared/authentication/client-credentials-flow?context=linkedin/context)
+A successful access token request returns a JSON object containing access_token, expires_in.
+```
+curl -XPOST -H "Content-type: application/x-www-form-urlencoded" -d 'grant_type=client_credentials&client_id=<client-ID>&client_secret=<client-secret>' 'https://www.linkedin.com/oauth/v2/accessToken'
+
+```
+
+
+## [Help Scout OAUTH](https://developer.helpscout.com/mailbox-api/overview/authentication/)
+A successful access token request returns a JSON object containing token_type, access_token, expires_in.
+```
+curl -X POST https://api.helpscout.net/v2/oauth2/token \
+    --data "grant_type=client_credentials" \
+    --data "client_id={application_id}" \
+    --data "client_secret={application_secret}"
+```
+
+
+## [Shodan Api Key](https://developer.shodan.io/api/requirements)
+```
+curl "https://api.shodan.io/shodan/host/8.8.8.8?key=TOKEN_HERE"
+```
+
+
+## [Bazaarvoice Passkey](https://developer.bazaarvoice.com/conversations-api/home)
+A Successful Passkey Request returns a JSON object containing company name
+```
+curl 'https://which-cpv-api.bazaarvoice.com/clientInfo?conversationspasskey=<Passkey>' --insecure 
+
+```
 
 # Contributing
 
