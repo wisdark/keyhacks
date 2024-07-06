@@ -3,7 +3,7 @@
 </p>
 </br>
 
-KeyHacks shows ways in which particular API keys found on a Bug Bounty Program can be used, to check if they are valid.
+KeyHacks shows methods to validate different API keys found on a Bug Bounty Program or a pentest.
 
 @Gwen001 has scripted the entire process available here and it can be found [here](https://github.com/gwen001/pentest-tools/blob/master/keyhacks.sh)
 
@@ -23,7 +23,9 @@ KeyHacks shows ways in which particular API keys found on a Bug Bounty Program c
 - [Buildkite Access token](#Buildkite-Access-token)
 - [ButterCMS API Key](#ButterCMS-API-Key)
 - [Calendly API Key](#Calendly-API-Key)
+- [Contentful Access Token](#Contentful-access-token)
 - [CircleCI Access Token](#CircleCI-Access-Token)
+- [Cloudflare API key](#cloudflare-api-key)
 - [Cypress record key](#Cypress-record-key)
 - [DataDog API key](#DataDog-API-key)
 - [Delighted API key](#Delighted-api-key)
@@ -43,6 +45,7 @@ KeyHacks shows ways in which particular API keys found on a Bug Bounty Program c
 - [Google Cloud Service Account credentials](#Google-Cloud-Service-Account-credentials)
 - [Google Maps API key](#Google-Maps-API-key)
 - [Google Recaptcha key](#Google-Recaptcha-key)
+- [Grafana Access Token](#Grafana-Access-Token)
 - [Help Scout OAUTH](#Help-Scout-OAUTH)
 - [Heroku API key](#Heroku-API-key)
 - [HubSpot API key](#Hubspot-API-key)
@@ -81,6 +84,7 @@ KeyHacks shows ways in which particular API keys found on a Bug Bounty Program c
 - [Spotify Access Token](#Spotify-Access-Token)
 - [Square](#Square)
 - [Stripe Live Token](#Stripe-Live-Token)
+- [Telegram Bot API Token](#Telegram-Bot-API-Token)
 - [Travis CI API token](#Travis-CI-API-token)
 - [Twilio Account_sid and Auth token](#Twilio-Account_sid-and-Auth-token)
 - [Twitter API Secret](#Twitter-API-Secret)
@@ -253,6 +257,10 @@ Response indicating valid credentials:
 Response indicating invalid credentials:
 ```
 {"errors":[{"category":"AUTHENTICATION_ERROR","code":"UNAUTHORIZED","detail":"This request could not be authorized."}]}
+```
+## [Contentful Access Token](https://www.contentful.com/developers/docs/references/authentication)
+```
+curl -v https://cdn.contentful.com/spaces/SPACE_ID_HERE/entries\?access_token\=ACCESS_TOKEN_HERE
 ```
 
 ## [Dropbox API](https://www.dropbox.com/developers/documentation/http/documentation)
@@ -536,7 +544,7 @@ https://api-ssl.bitly.com/v3/shorten?access_token=ACCESS_TOKEN&longUrl=https://w
 ## [Buildkite Access token](https://buildkite.com/docs/apis/rest-api)
 ```
 curl -H "Authorization: Bearer ACCESS_TOKEN" \
-https://api.buildkite.com/v2/user
+https://api.buildkite.com/v2/access-token
 ```
 
 ## [ButterCMS-API-Key](https://buttercms.com/docs/api/#authentication)
@@ -593,9 +601,15 @@ curl https://api.delighted.com/v1/metrics.json \
 curl -H "Travis-API-Version: 3" -H "Authorization: token <TOKEN>" https://api.travis-ci.org/repos
 ```
 
+## [Telegram Bot API Token](https://core.telegram.org/bots/api#making-requests)
+
+```
+curl https://api.telegram.org/bot<TOKEN>/getMe
+```
+
 ## [WakaTime API Key](https://wakatime.com/developers)
 ```
-curl "https://wakatime.com/api/v1/users/current/projects/?api_key=KEY_HERE"
+curl "https://wakatime.com/api/v1/users/current?api_key=KEY_HERE"
 ```
 
 ## [Sonarcloud Token](https://sonarcloud.io/web_api)
@@ -685,6 +699,13 @@ curl -u <YOUR_KEY_ID>:<YOUR_KEY_SECRET> \
 
 ```
 curl https://circleci.com/api/v1.1/me?circle-token=<TOKEN>
+```
+
+## [Cloudflare API key](https://api.cloudflare.com/#user-api-tokens-verify-token)
+
+```
+curl -X GET "https://api.cloudflare.com/client/v4/user/tokens/verify" \
+  -H "Authorization: Bearer <YOUR_API_TOKEN>"
 ```
 
 ## [Loqate API key](https://www.loqate.com/resources/support/apis)
@@ -881,6 +902,16 @@ A Successful Passkey Request returns a JSON object containing company name
 ```
 curl 'https://which-cpv-api.bazaarvoice.com/clientInfo?conversationspasskey=<Passkey>' --insecure 
 
+```
+
+## [Grafana Access Token](https://grafana.com/docs/grafana/latest/developers/http_api/user/)
+Grafana API supports Bearer and Basic authorisation schemes. Bearer:
+```
+curl -s -H "Authorization: Bearer your-api-key" http://your-grafana-server-url.com/api/user
+```
+Basic:
+```
+curl -u username:password http://your-grafana-server-url.com/api/user
 ```
 
 # Contributing
