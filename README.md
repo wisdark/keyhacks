@@ -65,6 +65,7 @@ KeyHacks shows methods to validate different API keys found on a Bug Bounty Prog
 - [Mapbox API key](#Mapbox-API-Key)
 - [Microsoft Azure Tenant](#Microsoft-Azure-Tenant)
 - [Microsoft Shared Access Signatures (SAS)](#Microsoft-Shared-Access-Signatures-(SAS))
+- [Microsoft Teams Webhook](#Microsoft-Teams-Webhook)
 - [New Relic Personal API Key (NerdGraph)](#New-Relic-Personal-API-Key-(NerdGraph))
 - [New Relic REST API](#New-Relic-REST-API)
 - [NPM token](#NPM-token)
@@ -111,6 +112,12 @@ curl -s -X POST -H "Content-type: application/json" -d '{"text":""}' "https://ho
 ## [Slack API token](https://api.slack.com/web)
 ```
 curl -sX POST "https://slack.com/api/auth.test?token=xoxp-TOKEN_HERE&pretty=1"
+```
+
+or
+
+```
+curl -sX POST "https://slack.com/api/auth.test" -H "Accept: application/json; charset=utf-8" -H "Authorization: Bearer xoxb-TOKEN_HERE"
 ```
 
 ## [SauceLabs Username and access Key](https://wiki.saucelabs.com/display/DOCS/Account+Methods)
@@ -376,6 +383,12 @@ static void UseAccountSAS(string sasToken)
 }
 ```
 
+## [Microsoft Teams Webhook](https://learn.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/connectors-using)
+If the below command returns `Summary or Text is required.`, it means that the URL is valid. If it returns `Invalid webhook URL` or any other responses would mean that the URL is invalid.
+```
+curl -H "Content-Type:application/json" -d "{'text':''}" "YOUR_WEBHOOK_URL"
+```
+
 ## [New Relic Personal API Key (NerdGraph)](https://docs.newrelic.com/docs/apis/nerdgraph/get-started/introduction-new-relic-nerdgraph#endpoint)
 
 ```
@@ -418,6 +431,24 @@ curl https://instance_name.salesforce.com/services/data/v20.0/ -H 'Authorization
 ```
 
 ## [Algolia API key](https://www.algolia.com/doc/rest-api/search/#overview)
+
+If the key has the `listIndexes` permission, you can list indexes with:
+```
+curl --request GET \
+  --url https://<example-app-id>-1.algolianet.com/1/indexes/ \
+  --header 'content-type: application/json' \
+  --header 'x-algolia-api-key: <example-key>' \
+  --header 'x-algolia-application-id: <example-appid>'
+```
+
+Otherwise you will have to know the name of an index (check the app source code or the requests it does). Then to enumerate its content:
+```
+curl --request GET \
+  --url https://<example-app-id>-1.algolianet.com/1/indexes/<example-index> \
+  --header 'content-type: application/json' \
+  --header 'x-algolia-api-key: <example-key>' \
+  --header 'x-algolia-application-id: <example-appid>'
+```
 
 Be cautious when running this command, since the payload might execute within an administrative environment, depending on what index you are editing the `highlightPreTag` of. It's recommended to use a more silent payload (such as XSS Hunter) to prove the possible cross-site scripting attack.
 
